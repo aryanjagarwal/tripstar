@@ -1,4 +1,4 @@
-import { View, Text, TextInput, StyleSheet, TouchableOpacity } from "react-native";
+import { View, Text, TextInput, StyleSheet, TouchableOpacity, Alert } from "react-native";
 import React, { useEffect, useState } from "react";
 import { useNavigation } from "expo-router";
 import { useRouter } from 'expo-router'
@@ -27,7 +27,15 @@ export default function SignIn() {
 
         if (!email && !password) {
             console.log('details are required')
-            
+            Alert.alert('Missing details', 'Enter your details', [
+                {
+                  text: 'Cancel',
+                  //onPress: () => console.log('Cancel Pressed'), 
+                  onPress: () => router.back(), 
+                  style: 'cancel',
+                },
+                {text: 'OK', onPress: () => console.log('OK Pressed')},
+              ]);
         }
 
         signInWithEmailAndPassword(auth, email, password)
@@ -40,6 +48,17 @@ export default function SignIn() {
             .catch((error) => {
                 const errorCode = error.code;
                 const errorMessage = error.message;
+                if (errorCode === 'auth/invalid-credential') {
+                    Alert.alert('Wrong Credentials', 'Enter valid credentials', [
+                        {
+                          text: 'Cancel',
+                          onPress: () => console.log('Cancel Pressed'), 
+                          //onPress: () => router.back(),
+                          style: 'cancel',
+                        },
+                        {text: 'OK', onPress: () => console.log('OK Pressed')},
+                      ]);
+                }
                 console.log(errorMessage, errorCode)
             });
     }

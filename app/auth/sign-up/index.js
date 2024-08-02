@@ -1,4 +1,4 @@
-import { View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native'
+import { View, Text, TextInput, StyleSheet, TouchableOpacity, Alert } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { useNavigation } from "expo-router";
 import { Colors } from "./../../../constants/Colors";
@@ -28,6 +28,15 @@ export default function SignUp() {
 
     if (!fullName && !email && !password) {
       console.log('details are required')
+      Alert.alert('Missing details', 'Enter your details', [
+        {
+          text: 'Cancel',
+          //onPress: () => console.log('Cancel Pressed'), 
+          onPress: () => router.back(), 
+          style: 'cancel',
+        },
+        {text: 'OK', onPress: () => console.log('OK Pressed')},
+      ]);
       return;
     }
     
