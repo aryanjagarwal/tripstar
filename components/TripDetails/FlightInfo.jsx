@@ -1,8 +1,16 @@
-import { View, Text, TouchableOpacity } from 'react-native'
+import { View, Text, TouchableOpacity, Linking } from 'react-native'
 import React from 'react'
 import { Colors } from '../../constants/Colors'
 
 export default function FlightInfo({ flightData }) {
+
+    const handleBookNowPress = () => {
+        const bookingUrl = 'https://www.skyscanner.co.in/'; // Replace with your actual flight booking URL
+        Linking.openURL(bookingUrl)
+            .catch(err => console.error("Failed to open URL:", err));
+    };
+
+
     return (
         <View style={{
             marginTop: 20,
@@ -27,7 +35,9 @@ export default function FlightInfo({ flightData }) {
                     borderRadius: 7,
                     width: 100,
                     marginTop: 7,
-                }}>
+                }}
+                    onPress={handleBookNowPress}
+                >
                     <Text style={{
                         color: Colors.WHITE,
                         fontFamily: 'outfit',

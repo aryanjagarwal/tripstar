@@ -47,7 +47,7 @@ export default function GenerateTrip() {
       docId: docId,
     });
 
-    router.push('(tabs)/mytrip');
+    router.push('(tabs)/mytrip'); 
 
     //router.push('(tabs)/mytrip');
   }
