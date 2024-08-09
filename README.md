@@ -4,6 +4,10 @@ This is an [Expo](https://expo.dev) project created with [`create-expo-app`](htt
 
 ## Get started
 
+https://github.com/user-attachments/assets/ad492033-1209-49d0-86ba-a530f80c1a82
+
+
+
 1. Install dependencies
 
    ```bash
