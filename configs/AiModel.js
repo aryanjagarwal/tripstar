@@ -1,0 +1,44 @@
+const {
+    GoogleGenerativeAI,
+    HarmCategory,
+    HarmBlockThreshold,
+  } = require("@google/generative-ai");
+  
+  const apiKey = process.env.EXPO_PUBLIC_GOOGLE_GEMINI_API_KEY;
+  const genAI = new GoogleGenerativeAI(apiKey);
+  
+  const model = genAI.getGenerativeModel({
+    model: "gemini-1.5-flash",
+  });
+  
+  const generationConfig = {
+    temperature: 1,
+    topP: 0.95,
+    topK: 64,
+    maxOutputTokens: 8192,
+    responseMimeType: "application/json",
+  };
+  
+
+    export const chatSession = model.startChat({
+      generationConfig,
+   // safetySettings: Adjust safety settings
+   // See https://ai.google.dev/gemini-api/docs/safety-settings
+      history: [
+        {
+          role: "user",
+          parts: [
+            {text: "Generate Travel Plan for Location: New York, NY, USA, for 4 Days and 3 Night for Solo with a Luxury budget with a Flight details, Flight Price with Booking url, Hotels options list with HotelNane, Hotel address, Price, hotel image url, geo coordinates, rating, descriptions and Places to visit nearby with placeName, Place Details, Place Image Url, Geo Coordinates, ticket Pricing, Time t travel each of the location for 4 days and 3 night with each day plan with best time to visit in JSON\n"},
+          ],
+        },
+        {
+          role: "model",
+          parts: [
+            {text: "```json\n{\n  \"trip\": {\n    \"destination\": \"New York, NY, USA\",\n    \"duration\": \"4 days and 3 nights\",\n    \"traveler_type\": \"Solo\",\n    \"budget\": \"Luxury\",\n    \"flight\": {\n      \"details\": \"Roundtrip flight from [Your Departure City] to New York (JFK/LGA)\",\n      \"price\": \"[$500 - $1000 (approx)]\",\n      \"booking_url\": \"https://www.google.com/flights\" // Replace with specific flight search engine URL\n    },\n    \"hotels\": [\n      {\n        \"name\": \"The Peninsula New York\",\n        \"address\": \"700 Fifth Ave, New York, NY 10019, USA\",\n        \"price\": \"[$1500 - $3000 per night (approx)]\",\n        \"image_url\": \"https://www.thepeninsula.com/newyork/en/images/hotel-gallery/exterior-day-view.jpg\",\n        \"geo_coordinates\": \"40.7580,-73.9785\",\n        \"rating\": \"4.5\",\n        \"description\": \"A luxurious hotel with stunning views of Central Park and Fifth Avenue.\",\n        \"places_nearby\": [\n          {\n            \"name\": \"Central Park\",\n            \"details\": \"A vast urban park with walking trails, gardens, and entertainment.\",\n            \"image_url\": \"https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Central_Park_Manhattan_NYC_March_2011.jpg/1200px-Central_Park_Manhattan_NYC_March_2011.jpg\",\n            \"geo_coordinates\": \"40.7829, -73.9654\",\n            \"ticket_pricing\": \"Free\",\n            \"time_to_travel\": \"1-2 hours\"\n          },\n          {\n            \"name\": \"Museum of Modern Art (MoMA)\",\n            \"details\": \"World-renowned museum showcasing modern and contemporary art.\",\n            \"image_url\": \"https://www.moma.org/images/media/press/2018/20180619_moma_façade_photo_by_david_schlachter.jpg\",\n            \"geo_coordinates\": \"40.7614, -73.9772\",\n            \"ticket_pricing\": \"[$25 - $30 (adult)]\",\n            \"time_to_travel\": \"2-3 hours\"\n          }\n        ]\n      },\n      {\n        \"name\": \"The Ritz-Carlton New York, Central Park\",\n        \"address\": \"50 Central Park South, New York, NY 10019, USA\",\n        \"price\": \"[$1200 - $2500 per night (approx)]\",\n        \"image_url\": \"https://www.ritzcarlton.com/en/hotels/new-york/central-park/media/images/hero-image/hero-image.jpg\",\n        \"geo_coordinates\": \"40.7651, -73.9767\",\n        \"rating\": \"4.6\",\n        \"description\": \"A luxurious hotel with breathtaking views of Central Park and a world-class spa.\",\n        \"places_nearby\": [\n          {\n            \"name\": \"Carnegie Hall\",\n            \"details\": \"A renowned concert hall hosting classical music performances.\",\n            \"image_url\": \"https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Carnegie_Hall_2008.jpg/1280px-Carnegie_Hall_2008.jpg\",\n            \"geo_coordinates\": \"40.7606, -73.9776\",\n            \"ticket_pricing\": \"[$40 - $200 (depending on performance)]\",\n            \"time_to_travel\": \"1-2 hours\"\n          },\n          {\n            \"name\": \"Rockefeller Center\",\n            \"details\": \"An iconic complex with art deco architecture, shopping, and the Top of the Rock observation deck.\",\n            \"image_url\": \"https://upload.wikimedia.org/wikipedia/commons/thumb/f/f0/Rockefeller_Center_in_winter_2012.jpg/1280px-Rockefeller_Center_in_winter_2012.jpg\",\n            \"geo_coordinates\": \"40.7580, -73.9785\",\n            \"ticket_pricing\": \"[$35 - $45 (adult)]\",\n            \"time_to_travel\": \"1-2 hours\"\n          }\n        ]\n      }\n    ],\n    \"daily_plan\": [\n      {\n        \"day\": \"Day 1\",\n        \"best_time_to_visit\": \"Morning\",\n        \"activities\": [\n          {\n            \"name\": \"Explore Central Park\",\n            \"details\": \"Take a stroll through the park, visit the Bethesda Terrace, or enjoy a picnic lunch.\",\n            \"time_to_spend\": \"2-3 hours\"\n          },\n          {\n            \"name\": \"Lunch at The Loeb Boathouse\",\n            \"details\": \"Enjoy a leisurely lunch overlooking the lake.\",\n            \"time_to_spend\": \"1 hour\"\n          },\n          {\n            \"name\": \"Visit the Metropolitan Museum of Art\",\n            \"details\": \"Explore one of the world's largest and most comprehensive art museums.\",\n            \"time_to_spend\": \"3-4 hours\"\n          }\n        ]\n      },\n      {\n        \"day\": \"Day 2\",\n        \"best_time_to_visit\": \"Morning\",\n        \"activities\": [\n          {\n            \"name\": \"Shopping on Fifth Avenue\",\n            \"details\": \"Browse luxury boutiques and designer stores.\",\n            \"time_to_spend\": \"2-3 hours\"\n          },\n          {\n            \"name\": \"Lunch at The Palm Court\",\n            \"details\": \"Enjoy a traditional afternoon tea at The Plaza Hotel.\",\n            \"time_to_spend\": \"1 hour\"\n          },\n          {\n            \"name\": \"Broadway Show\",\n            \"details\": \"Catch a performance in the Theatre District.\",\n            \"time_to_spend\": \"3-4 hours\"\n          }\n        ]\n      },\n      {\n        \"day\": \"Day 3\",\n        \"best_time_to_visit\": \"Afternoon\",\n        \"activities\": [\n          {\n            \"name\": \"Visit the Empire State Building\",\n            \"details\": \"Enjoy panoramic views of the city from the observation deck.\",\n            \"time_to_spend\": \"1-2 hours\"\n          },\n          {\n            \"name\": \"Explore the Financial District\",\n            \"details\": \"Walk along the waterfront, see the Charging Bull statue, and visit the 9/11 Memorial and Museum.\",\n            \"time_to_spend\": \"2-3 hours\"\n          },\n          {\n            \"name\": \"Dinner at Per Se\",\n            \"details\": \"Enjoy a Michelin-starred dining experience.\",\n            \"time_to_spend\": \"2-3 hours\"\n          }\n        ]\n      },\n      {\n        \"day\": \"Day 4\",\n        \"best_time_to_visit\": \"Morning\",\n        \"activities\": [\n          {\n            \"name\": \"Visit the Guggenheim Museum\",\n            \"details\": \"Explore Frank Lloyd Wright's iconic spiral building and its collection of modern and contemporary art.\",\n            \"time_to_spend\": \"2-3 hours\"\n          },\n          {\n            \"name\": \"Lunch at The Spotted Pig\",\n            \"details\": \"Enjoy a gastropub meal in the West Village.\",\n            \"time_to_spend\": \"1 hour\"\n          },\n          {\n            \"name\": \"Relax in Bryant Park\",\n            \"details\": \"Enjoy a relaxing afternoon in this park near the New York Public Library.\",\n            \"time_to_spend\": \"1-2 hours\"\n          }\n        ]\n      }\n    ]\n  }\n}\n```\n\n**Please note:**\n\n* This is a sample plan and can be customized based on your interests and preferences.\n* Flight prices and hotel rates are approximate and can vary based on season and availability.\n* Booking links are provided for general flight search engines. You will need to use these links to find specific flights and make your booking.\n*  You can add more activities and refine the daily plan to fit your interests. \n* It is highly recommended to book your flight and accommodation in advance, especially during peak seasons. \n"},
+          ],
+        },
+      ],
+    });
+  
+    //const result = await chatSession.sendMessage("INSERT_INPUT_HERE");
+    //console.log(result.response.text());
